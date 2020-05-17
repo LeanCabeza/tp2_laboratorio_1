@@ -50,7 +50,7 @@ Employee nuevoEmpleado(int id,char name[],char lastName[], int salary , int sect
  * \return Retorna 1 (EXITO) o 0 (ERROR)
  *
  */
-int altaEmpleado(Employee empleado[], int tam, int legajo);
+int altaEmpleado(Employee empleado[], int tam, int *legajo);
 /**
  * \brief Busca un empleado por su ID.
  * \param id id del empleado a buscar

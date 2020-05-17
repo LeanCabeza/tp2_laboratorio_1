@@ -44,8 +44,7 @@ int main(void) {
 			printf(
 					"\n Recorda :  que para poder operar con los empleados , es necesario que des de alta alguno.\n"
 					"--------------------------------------------------------------------------------------------\n");
-					altaEmpleado(empleados,QTY,legajo);
-					legajo++;
+					altaEmpleado(empleados,QTY,&legajo);
 					flag = 0;
 		}else{
 				if(respuesta == 0 )
@@ -53,7 +52,7 @@ int main(void) {
 					switch(opcion)
 					{
 						case 1:
-							altaEmpleado(empleados,QTY,legajo);
+							altaEmpleado(empleados,QTY,&legajo);
 							printf("\nEl empleado fue dado de alta\n");
 							flag = 0;
 							break;

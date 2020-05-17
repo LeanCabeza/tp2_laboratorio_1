@@ -29,72 +29,78 @@ int inicializarEmpleados(Employee empleados[], int tam)
 }
 
 
-
-int buscarLibre(Employee empleado[], int tam)
+int buscarEmptyEmployee(Employee array[], int size, int* posicion)
 {
-	int indice = -1;
+    int retorno=-1;
+    int i;
+    if(array!= NULL && size>=0 && posicion!=NULL)
+    {
+        for(i=0;i<size;i++)
+        {
+            if(array[i].isEmpty==1)
+            {
+                retorno=0;
+                *posicion=i;
+                break;
+            }
+        }
+    }
+    return retorno ;
+}
 
-	for(int i = 0; i < tam; i++)
+
+
+int nuevoEmployee(Employee* list, int len, int id, char name[],char lastName[],float salary,int sector)
+{
+	int retorno = -1;
+	if(list!=NULL && len>0 && id>0 && name!=NULL && lastName!=NULL && salary>0 && sector>0)
 	{
-		if(empleado[i].isEmpty == 1)
+		list[id].id = id;
+	    strcpy(list[id].name, name);
+	    strcpy(list[id].lastName, lastName);
+	    list[id].salary = salary;
+	    list[id].sector = sector;
+	    list[id].isEmpty = 0;
+
+	    retorno = 0;
+	}
+ return retorno;
+}
+
+int altaEmpleado(Employee* list,int len,int* idCont)
+{
+	int retorno=-1;
+	int posicion;
+	int auxId;
+	char auxName[51];
+	char auxLastName[51];
+	int auxSalary;
+	int auxSector;
+
+	if(list!=NULL && len>0)
+	{
+		if(buscarEmptyEmployee(list,len,&posicion) == -1)
 		{
-			indice = i;
-			break;
+			printf("\nNo hay mas lugar para recibir altas.\n");
+		}
+		else
+		{
+			(*idCont)++;
+			auxId = *idCont;
+			fflush(stdin);
+			utn_getName("\nIngrese el Nombre : ","\nError en el nombre ",1,51,3,auxName);
+			fflush(stdin);
+			utn_getName("\nIngrese el Apellido: ","\nError",1,51,3,auxLastName);
+			fflush(stdin);
+			utn_getNumero(&auxSalary,"Ingrese el Salario: ", "\nERROR: SALARIO INCORRECTO\n",1000,500000,5);
+			fflush(stdin);
+			utn_getNumero(&auxSector, "Ingrese el sector: ", "\nERROR: SECTOR INCORRECTO\n",1,10,5);
+			fflush(stdin);
+			nuevoEmployee(list,len,auxId,auxName,auxLastName,auxSalary,auxSector);
 		}
 	}
-	return indice;
-}
 
-
-Employee nuevoEmpleado(int id,char name[],char lastName[], int salary,int sector)
-{
-	Employee nuevoEmpleado ;
-	nuevoEmpleado.id = id;
-	strcpy(nuevoEmpleado.name,name);
-	strcpy(nuevoEmpleado.lastName,lastName);
-	nuevoEmpleado.salary = salary ;
-	nuevoEmpleado.sector = sector ;
-	nuevoEmpleado.isEmpty = 0;
-
-	return nuevoEmpleado;
-}
-
-
-int altaEmpleado(Employee empleado[], int tam, int legajo)
-{
-	int todoOk = 0;
-	int indice;
-	char name[50];
-	char lastName[50];
-	int salary;
-	int sector;
-
-	printf("***Datos a cargar del Empleado****\n\n");
-
-	indice = buscarLibre(empleado, tam);
-
-	if(indice == -1)
-	{
-		printf("Sistema Completo. No se pueden agregar mas empleados.\n");
-		system("pause");
-	}
-	else
-	{
-		fflush(stdin);
-		utn_getName("Ingrese el nombre: \n", "\nERROR: NOMBRE INCORRECTO\n", 0,20,5, name);
-		fflush(stdin);
-		utn_getName("Ingrese el Apellido: \n", "\nERROR: NOMBRE INCORRECTO\n", 0,20,5, lastName);
-		fflush(stdin);
-		utn_getNumero(&salary,"Ingrese el Salario: ", "\nERROR: SALARIO INCORRECTO\n",1000,500000,5);
-		fflush(stdin);
-		utn_getNumero(&sector, "Ingrese el sector: ", "\nERROR: SECTOR INCORRECTO\n",1,10,5);
-		fflush(stdin);
-		legajo ++ ;
-		empleado[indice] = nuevoEmpleado(legajo, name, lastName, salary,sector);
-		todoOk = 1;
-
-	}
-	return todoOk;
+	return retorno;
 }
 
 
@@ -303,22 +309,22 @@ int modificarEmpleado(Employee empleados[],int tam)
 
 		if(opcion == 1 )
 		{
-			utn_getName("\nIngrese Nombre del empleado: : ","\nError\n",1,51,1,empleados[indice].name);
+			utn_getName("\nIngrese Nombre del empleado: : ","\nError nombre invalido\n",1,51,5,empleados[indice].name);
 			printf("Se actualizo el Nombre ");
 			todoOk = 1 ;
 		}
 		else if (opcion == 2)
 		{
-			utn_getName("\nIngrese Apellido del musico: : ","\nError\n",1,51,1,empleados[indice].lastName);
+			utn_getName("\nIngrese Apellido del empleado: ","\nError apellido invalido\n",1,51,5,empleados[indice].lastName);
 			printf("Se actualizo el Apellido ");
 			todoOk = 1;
 		}else if (opcion == 3)
 		{
-			utn_getNumero(&empleados[indice].salary,"\nIngrese el Salario del empleado: ","\nError\n",1,500000,5);
+			utn_getNumero(&empleados[indice].salary,"\nIngrese el Salario del empleado: ","\nError salario invalido \n",1,500000,5);
 			todoOk = 1;
 		}else if (opcion == 4)
 		{
-			utn_getNumero(&empleados[indice].sector,"\nIngrese el sector del empleado: ","\nError\n",1,10,5);
+			utn_getNumero(&empleados[indice].sector,"\nIngrese el sector del empleado: ","\nError sector invalido\n",1,10,5);
 						todoOk = 1;
 		}
 		else

@@ -67,7 +67,7 @@ int isValidName(char* stringRecibido)   //si fuera un numero podrìa necesitar pa
 
 int isValidNumber(char* stringRecibido)
 {
-    int retorno=1;  // para las funciones isValid arranco con verdadero y cambio cuando encuentro un error
+    int retorno=1;
     int i;
     for(i=0;stringRecibido[i]!='\0';i++)
     {
@@ -90,7 +90,7 @@ int getString(char* msg, char* msgError, int min, int max, int* reintentos, char
         do
         {
             printf("%s",msg);   //no poner salto de linea, se va a pasar en el mensaje por valor
-            //fflush(stdin);
+            fflush(stdin);
             fgets(bufferStr,sizeof(bufferStr),stdin);
             bufferStr[strlen(bufferStr)-1]='\0';
 
@@ -100,7 +100,8 @@ int getString(char* msg, char* msgError, int min, int max, int* reintentos, char
                 retorno=0;
                 break;
             }
-            printf("%s 1",msgError);
+            fflush(stdin);
+            printf("%s",msgError);
             (*reintentos)--;
         }
         while((*reintentos)>=0);
@@ -128,7 +129,7 @@ int utn_getName(char* msg, char* msgError, int min, int max, int reintentos, cha
                 }
                 else
                 {
-                    printf("%s 2",msgError);
+                    printf("%s",msgError);
                     reintentos--;
                 }
             }
@@ -137,6 +138,7 @@ int utn_getName(char* msg, char* msgError, int min, int max, int reintentos, cha
     }
     return retorno;
 }
+
 
 
 

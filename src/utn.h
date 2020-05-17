@@ -28,6 +28,7 @@ int utn_getNumero(int* pResultado, char* mensaje, char* mensajeError, int minimo
  * \return Retorna 1 (verdadero) si la cadena es valida y 0 (falso) si no lo es
  *
  */
+
 int isValidName(char* stringRecibido) ;
 /**
  * \brief Verifica si la cadena ingresada es un numero valido
@@ -52,5 +53,6 @@ int utn_getName(char* msg, char* msgError, int min, int max, int reintentos, cha
  *
  */
 int subMenuInformes();
+
 
 #endif /* UTN_H_ */
